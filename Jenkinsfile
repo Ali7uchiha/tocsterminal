@@ -5,14 +5,14 @@ pipeline {
       stage('Build') {
         steps {
           script {
-            dockerImage = docker.build("junaid345/resume:${env.BUILD_ID}")
+            dockerImage = docker.build("skante666/resume:${env.BUILD_ID}")
         }
     }
 }
         stage('Push') {
             steps {
                 script {
-                    docker.withRegistry('https://registry.hub.docker.com', 'ca772bd5-482c-4b43-9195-3e41a98a2d39') {
+                    docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
                         dockerImage.push()
                     }
                 }
@@ -32,13 +32,13 @@ pipeline {
                     sshPublisher(
                         publishers: [
                             sshPublisherDesc(
-                                configName: "thiird", 
+                                configName: "new", 
                                 transfers: [sshTransfer(
                                     execCommand: """
-                                        docker pull junaid345/resume:${env.BUILD_ID}
-                                        docker stop junaid345-cv-container || true
-                                        docker rm anas-cv-container || true
-                                        docker run -d --name junaid345-cv-container -p 80:80 junaid345/resume:${env.BUILD_ID}
+                                        docker pull skante666/resume:${env.BUILD_ID}
+                                        docker stop skante666-cv-container || true
+                                        docker rm skante666-cv-container || true
+                                        docker run -d --name -cv-container -p 80:80 skante666/resume:${env.BUILD_ID}
                                     """
                                 )]
                             )
@@ -54,13 +54,13 @@ pipeline {
                         sshPublisher(
                             publishers: [
                                 sshPublisherDesc(
-                                    configName: "thiird",
+                                    configName: "new",
                                     transfers: [sshTransfer(
                                         execCommand: """
-                                            docker pull junaid345/resume:${previousSuccessfulTag}
-                                            docker stop junaid345-cv-container || true
-                                            docker rm junaid345-cv-container || true
-                                            docker run -d --name junaid345-cv-container -p 80:80 junaid345/resume:${previousSuccessfulTag}
+                                            docker pull skantej666/resume:${previousSuccessfulTag}
+                                            docker stop skante666-cv-container || true
+                                            docker rm skante666-cv-container || true
+                                            docker run -d --name skante666-cv-container -p 80:80 skante666/resume:${previousSuccessfulTag}
                                         """
                                     )]
                                 )
@@ -78,7 +78,7 @@ pipeline {
     post {
         success {
             mail(
-                to: 'junaidaw567@gmail.com',
+                to: 'muhammad.ali3956@gmail.com',
                 subject: "Failed Pipeline: ${env.JOB_NAME} [${env.BUILD_NUMBER}]",
                 body: "Something is wrong with the build ${env.BUILD_URL}"
             )
@@ -86,7 +86,7 @@ pipeline {
             
         failure {
             mail(
-                to: 'junaidaw567@gmail.com',
+                to: 'muhammad.ali3956@gmail.com',
                 subject: "Failed Pipeline: ${env.JOB_NAME} [${env.BUILD_NUMBER}]",
                 body: "Something is wrong with the build ${env.BUILD_URL}"
             )
