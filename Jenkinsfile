@@ -21,7 +21,7 @@ pipeline {
 
         stage('Test') {
             steps {
-                sh 'ls -l index.html.html' // Simple check for index.html
+                sh 'ls -l index.html' // Simple check for index.html
             }
         }
 
