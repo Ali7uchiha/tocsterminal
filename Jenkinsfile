@@ -12,7 +12,7 @@ pipeline {
         stage('Push') {
             steps {
                 script {
-                    docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
+                    docker.withRegistry('https://registry.hub.docker.com', 'd4bae6be-0a8a-405d-b8c9-4d1df9756506') {
                         dockerImage.push()
                     }
                 }
